@@ -1,10 +1,11 @@
 /*
- * @Descripttion: webpack 生成环境 配置文件
+ * @Descripttion: webpack 生产环境 配置文件
  * @Author: ZhangYu
  * @Date: 2023-04-01 00:31:26
  * @LastEditors: ZhangYu
- * @LastEditTime: 2023-04-01 16:41:23
+ * @LastEditTime: 2023-04-01 16:54:24
  */
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 const ESLintWebpackPlugin = require('eslint-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
@@ -110,6 +111,7 @@ module.exports = {
     }),
     new MiniCssExtractPlugin({
       filename: 'static/css/main.css'
-    }) // 单独提取css文件
+    }), // 单独提取css文件
+    new CssMinimizerPlugin()
   ]
 }
