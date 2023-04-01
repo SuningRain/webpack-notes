@@ -3,13 +3,14 @@
  * @Author: ZhangYu
  * @Date: 2023-04-01 00:31:26
  * @LastEditors: ZhangYu
- * @LastEditTime: 2023-04-01 22:06:15
+ * @LastEditTime: 2023-04-01 22:40:11
  */
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 const ESLintWebpackPlugin = require('eslint-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const TerserWebpackPlugin = require('terser-webpack-plugin')
+const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
 
 const path = require('path')
 const os = require('os')
@@ -151,6 +152,34 @@ module.exports = {
       // js 压缩
       new TerserWebpackPlugin({
         parallel: threads // 开启多进程和设置进程数量
+      }),
+      // image 压缩
+      new ImageMinimizerPlugin({
+        minimizer: {
+          implementation: ImageMinimizerPlugin.imageminGenerate,
+          options: {
+            plugins: [
+              ["gifsicle", { interlaced: true }],
+              ["jpegtran", { progressive: true }],
+              ["optipng", { optimizationLevel: 5 }],
+              [
+                "svgo",
+                {
+                  plugins: [
+                    "preset-default",
+                    "prefixIds",
+                    {
+                      name: "sortAttrs",
+                      params: {
+                        xmlnsOrder: "alphabetical",
+                      },
+                    },
+                  ],
+                },
+              ],
+            ],
+          },
+        },
       })
     ]
   },
