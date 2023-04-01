@@ -3,9 +3,10 @@
  * @Author: ZhangYu
  * @Date: 2023-04-01 00:31:26
  * @LastEditors: ZhangYu
- * @LastEditTime: 2023-04-01 14:15:13
+ * @LastEditTime: 2023-04-01 14:26:41
  */
 const ESLintWebpackPlugin = require('eslint-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 const path = require('path')
 
 module.exports = {
@@ -88,6 +89,10 @@ module.exports = {
   plugins: [
     new ESLintWebpackPlugin({
       context: path.resolve(__dirname, 'src')
+    }),
+    new HtmlWebpackPlugin({
+      // 模板：以public/index.html文件创建新的html文件
+      template: path.resolve(__dirname, 'public/index.html')
     })
   ],
   mode: 'development'
