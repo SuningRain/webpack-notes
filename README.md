@@ -8,5 +8,4 @@
 ## 项目目的：webpack学习
 
 #### 注意安装
- - 这几个包使用npm安装会报错，需使用cnpm
-  cnpm install imagemin-gifsicle imagemin-jpegtran imagemin-optipng imagemin-svgo -D
+ - 对于npm不能安装的包可以使用cnpm尝试

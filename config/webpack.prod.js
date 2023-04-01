@@ -3,7 +3,7 @@
  * @Author: ZhangYu
  * @Date: 2023-04-01 00:31:26
  * @LastEditors: ZhangYu
- * @LastEditTime: 2023-04-02 00:09:27
+ * @LastEditTime: 2023-04-02 00:57:20
  */
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 const ESLintWebpackPlugin = require('eslint-webpack-plugin')
@@ -11,6 +11,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const TerserWebpackPlugin = require('terser-webpack-plugin')
 const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
+const PreloadWebpackPlugin = require('@vue/preload-webpack-plugin')
 
 const path = require('path')
 const os = require('os')
@@ -47,11 +48,11 @@ module.exports = {
     // 绝对路径，__dirname表示nodejs变量，代表当前文件夹的文件目录
     path: path.resolve(__dirname, '../dist'),
     // 打包输出，文件名
-    filename: 'static/js/main.js',
+    filename: 'static/js/[name].[contenthash:10].js',
     // 打包后其他文件命名
-    chunkFilename: 'static/js/[name].chunk.js',
+    chunkFilename: 'static/js/[name].chunk.[contenthash:10].js',
     // 图片，字体等通过type:asset 处理资源命名方式
-    assetModuleFilename: 'static/media/[hash:10][ext][query]',
+    assetModuleFilename: 'static/media/[contenthash:10][ext][query]',
     // 打包自动清除上一个dist
     clean: true
   },
@@ -97,7 +98,7 @@ module.exports = {
             test: /\.(mp3|mp4|avi)$/,
             type: 'asset/resource',
             generator: {
-              filename: 'static/media/[hash:10][ext][query]'
+              // filename: 'static/media/[hash:10][ext][query]'
             }
           },
           {
@@ -145,8 +146,8 @@ module.exports = {
       template: path.resolve(__dirname, '../public/index.html')
     }),
     new MiniCssExtractPlugin({
-      filename: 'static/css/[name].css',
-      chunkFilename: 'static/css/[name].chunk.css'
+      filename: 'static/css/[name].[contenthash:10].css',
+      chunkFilename: 'static/css/[name].chunk.[contenthash:10].css'
     }) // 单独提取css文件
   ],
   optimization: {
@@ -185,11 +186,19 @@ module.exports = {
             ],
           },
         },
+      }),
+      new PreloadWebpackPlugin({
+        rel: 'preload',
+        as: 'script'
       })
     ],
     // 代码分割配置
     splitChunks: {
       chunks: 'all'
+    },
+    // 生成一个hash值依赖文件，避免一个文件改变，其他引用这个文件的也重新加载
+    runtimeChunk: {
+      name: (entrypoint) => `runtime~$(entrypoint.name).js`
     }
   },
   devtool: 'source-map' // 有行和列的映射
