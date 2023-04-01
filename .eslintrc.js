@@ -3,7 +3,7 @@
  * @Author: ZhangYu
  * @Date: 2023-04-01 12:13:47
  * @LastEditors: ZhangYu
- * @LastEditTime: 2023-04-01 12:36:57
+ * @LastEditTime: 2023-04-01 23:14:19
  */
 module.exports = {
   // 基础 Eslint 规则
@@ -18,5 +18,6 @@ module.exports = {
   },
   rules: {
     "no-var": 2 // 不是用var  0 表示可用  1 表示警告  2 表示报错
-  }
+  },
+  plugins: ['import'] // 解决动态导入语法报错
 }

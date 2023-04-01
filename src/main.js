@@ -1,3 +1,10 @@
+/*
+ * @Descripttion:
+ * @Author: ZhangYu
+ * @Date: 2023-03-31 22:09:44
+ * @LastEditors: ZhangYu
+ * @LastEditTime: 2023-04-01 23:54:23
+ */
 import './css/iconfont.css'
 import './css/index.css'
 import './less/index.less'
@@ -8,10 +15,18 @@ import sum from './js/sum'
 
 console.log(count(1, 2))
 console.log(sum(1, 2 ,3))
+console.log(document.getElementById('btn'))
+document.getElementById('btn').onclick = function () {
+  // webpack 魔法命名 打包后的文件名
+  import(/* webpackChunkName: "math" */ './js/math').then(({ mul }) => {
+    console.log(mul(2, 3))
+  })
+}
 
-if (module.hot) {
+if (module.hot) { // 开发环境
   // js热模块替换需要单独处理，css开启hot后默认支持热替换
   // 实际vue项目中有 vue-loader自动帮助配置   react有react-hot-loader
   module.hot.accept('./js/count')
   module.hot.accept('./js/sum')
+  module.hot.accept('./js/math')
 }

@@ -3,7 +3,7 @@
  * @Author: ZhangYu
  * @Date: 2023-04-01 00:31:26
  * @LastEditors: ZhangYu
- * @LastEditTime: 2023-04-01 22:40:11
+ * @LastEditTime: 2023-04-01 23:56:09
  */
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 const ESLintWebpackPlugin = require('eslint-webpack-plugin')
@@ -48,6 +48,8 @@ module.exports = {
     path: path.resolve(__dirname, '../dist'),
     // 打包输出，文件名
     filename: 'static/js/main.js',
+    // 打包后其他文件命名
+    chunkFilename: 'static/js/[name].js',
     // 打包自动清除上一个dist
     clean: true
   },
@@ -181,7 +183,11 @@ module.exports = {
           },
         },
       })
-    ]
+    ],
+    // 代码分割配置
+    splitChunks: {
+      chunks: 'all'
+    }
   },
   devtool: 'source-map' // 有行和列的映射
 }
