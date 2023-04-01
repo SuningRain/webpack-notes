@@ -3,7 +3,7 @@
  * @Author: ZhangYu
  * @Date: 2023-04-01 00:31:26
  * @LastEditors: ZhangYu
- * @LastEditTime: 2023-04-01 12:45:26
+ * @LastEditTime: 2023-04-01 14:15:13
  */
 const ESLintWebpackPlugin = require('eslint-webpack-plugin')
 const path = require('path')
@@ -71,6 +71,16 @@ module.exports = {
         generator: {
           filename: 'static/media/[hash:10][ext][query]'
         }
+      },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/, // 排除
+        loader: 'babel-loader'
+        // use: {
+        //   options: {
+        //     presets: ['@babel/preset-env']
+        //   }
+        // }
       }
     ]
   },
