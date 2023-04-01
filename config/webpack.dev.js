@@ -3,7 +3,7 @@
  * @Author: ZhangYu
  * @Date: 2023-04-01 00:31:26
  * @LastEditors: ZhangYu
- * @LastEditTime: 2023-04-01 17:35:00
+ * @LastEditTime: 2023-04-01 17:47:15
  */
 const ESLintWebpackPlugin = require('eslint-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -47,55 +47,59 @@ module.exports = {
   // 加载器
   module: {
     rules: [
-      // loader的配置
-      {
-        test: /\.css$/,
-        use: getStyleLoader()
-      },
-      {
-        test: /\.less$/,
-        use: getStyleLoader('less-loader')
-      },
-      {
-        test: /\.s[ac]ss$/,
-        use: getStyleLoader('sass-loader')
-      },
-      { // webpack默认配置了url loader，图片默认会处理，这里处理特性需求
-        test: /\.(png|jpe?g|gif|webp|svg)$/,
-        type: 'asset',
-        parser: {
-          dataUrlCondition: { // 针对图片大小小于10kb的转成base64，减少资源请求
-            maxSize: 10 * 1024
+          {
+            oneOf: [
+              // loader的配置
+          {
+            test: /\.css$/,
+            use: getStyleLoader()
+          },
+          {
+            test: /\.less$/,
+            use: getStyleLoader('less-loader')
+          },
+          {
+            test: /\.s[ac]ss$/,
+            use: getStyleLoader('sass-loader')
+          },
+          { // webpack默认配置了url loader，图片默认会处理，这里处理特性需求
+            test: /\.(png|jpe?g|gif|webp|svg)$/,
+            type: 'asset',
+            parser: {
+              dataUrlCondition: { // 针对图片大小小于10kb的转成base64，减少资源请求
+                maxSize: 10 * 1024
+              }
+            },
+            generator: {
+              // 输出图片位置
+              filename: 'static/images/[hash:10][ext][query]'
+            }
+          },
+          {
+            test: /\.(ttf|woff2?)$/,
+            type: 'asset/resource',
+            generator: {
+              filename: 'static/fonts/[hash:10][ext][query]'
+            }
+          },
+          {
+            test: /\.(mp3|mp4|avi)$/,
+            type: 'asset/resource',
+            generator: {
+              filename: 'static/media/[hash:10][ext][query]'
+            }
+          },
+          {
+            test: /\.js$/,
+            exclude: /node_modules/, // 排除
+            loader: 'babel-loader'
+            // use: {
+            //   options: {
+            //     presets: ['@babel/preset-env']
+            //   }
+            // }
           }
-        },
-        generator: {
-          // 输出图片位置
-          filename: 'static/images/[hash:10][ext][query]'
-        }
-      },
-      {
-        test: /\.(ttf|woff2?)$/,
-        type: 'asset/resource',
-        generator: {
-          filename: 'static/fonts/[hash:10][ext][query]'
-        }
-      },
-      {
-        test: /\.(mp3|mp4|avi)$/,
-        type: 'asset/resource',
-        generator: {
-          filename: 'static/media/[hash:10][ext][query]'
-        }
-      },
-      {
-        test: /\.js$/,
-        exclude: /node_modules/, // 排除
-        loader: 'babel-loader'
-        // use: {
-        //   options: {
-        //     presets: ['@babel/preset-env']
-        //   }
-        // }
+        ]
       }
     ]
   },
