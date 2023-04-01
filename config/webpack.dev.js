@@ -3,7 +3,7 @@
  * @Author: ZhangYu
  * @Date: 2023-04-01 00:31:26
  * @LastEditors: ZhangYu
- * @LastEditTime: 2023-04-01 15:45:01
+ * @LastEditTime: 2023-04-01 17:04:50
  */
 const ESLintWebpackPlugin = require('eslint-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -14,7 +14,7 @@ module.exports = {
   mode: 'development',
   // 入口
   entry: {
-    path: './src/main.js' // 相对路径
+    path: './src/main.js' // 相对路径，这里路径不用修改到上一级是因为，配置文件实际运行是在最外层
   },
   // 输出 开发环境不需要
   output: {
