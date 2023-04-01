@@ -91,7 +91,8 @@ module.exports = {
           },
           {
             test: /\.js$/,
-            exclude: /node_modules/, // 排除
+            // exclude: /node_modules/, // 排除
+            include: path.resolve(__dirname, '../src'),
             loader: 'babel-loader'
             // use: {
             //   options: {
@@ -106,7 +107,8 @@ module.exports = {
   // 插件
   plugins: [
     new ESLintWebpackPlugin({
-      context: path.resolve(__dirname, '../src')
+      context: path.resolve(__dirname, '../src'),
+      exclude: "node_modules"
     }),
     new HtmlWebpackPlugin({
       // 模板：以public/index.html文件创建新的html文件
