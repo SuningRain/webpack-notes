@@ -3,7 +3,7 @@
  * @Author: ZhangYu
  * @Date: 2023-04-01 00:31:26
  * @LastEditors: ZhangYu
- * @LastEditTime: 2023-04-01 16:54:24
+ * @LastEditTime: 2023-04-01 17:21:44
  */
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 const ESLintWebpackPlugin = require('eslint-webpack-plugin')
@@ -113,5 +113,6 @@ module.exports = {
       filename: 'static/css/main.css'
     }), // 单独提取css文件
     new CssMinimizerPlugin()
-  ]
+  ],
+  devtool: 'source-map' // 有行和列的映射
 }

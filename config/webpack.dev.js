@@ -3,7 +3,7 @@
  * @Author: ZhangYu
  * @Date: 2023-04-01 00:31:26
  * @LastEditors: ZhangYu
- * @LastEditTime: 2023-04-01 17:18:05
+ * @LastEditTime: 2023-04-01 17:26:41
  */
 const ESLintWebpackPlugin = require('eslint-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -117,5 +117,6 @@ module.exports = {
     host: 'localhost',
     port: '8080',
     open: true // 是否自动打开浏览器
-  }
+  },
+  devtool: 'cheap-module-source-map' // 行映射
 }
