@@ -3,7 +3,7 @@
  * @Author: ZhangYu
  * @Date: 2023-04-01 00:31:26
  * @LastEditors: ZhangYu
- * @LastEditTime: 2023-04-01 22:06:07
+ * @LastEditTime: 2023-04-02 00:12:02
  */
 const ESLintWebpackPlugin = require('eslint-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -44,6 +44,10 @@ module.exports = {
     path: path.resolve(__dirname, '../dist'),
     // 打包输出，入口文件路径
     filename: 'static/js/main.js',
+    // 打包后其他文件命名
+    chunkFilename: 'static/js/[name].chunk.js',
+    // 图片，字体等通过type:asset 处理资源命名方式
+    assetModuleFilename: 'static/media/[hash:10][ext][query]',
     // 打包自动清除上一个dist
     // clean: true
   },
@@ -75,14 +79,14 @@ module.exports = {
             },
             generator: {
               // 输出图片位置
-              filename: 'static/images/[hash:10][ext][query]'
+              // filename: 'static/images/[hash:10][ext][query]'
             }
           },
           {
             test: /\.(ttf|woff2?)$/,
             type: 'asset/resource',
             generator: {
-              filename: 'static/fonts/[hash:10][ext][query]'
+              // filename: 'static/fonts/[hash:10][ext][query]'
             }
           },
           {
@@ -137,7 +141,8 @@ module.exports = {
       template: path.resolve(__dirname, '../public/index.html')
     }),
     new MiniCssExtractPlugin({
-      filename: 'static/css/main.css'
+      filename: 'static/css/[name].css',
+      chunkFilename: 'static/css/[name].chunk.css'
     })
   ],
   // 不会在dist目录下输出，它是在内存中编译打包的。
