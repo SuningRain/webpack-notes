@@ -3,7 +3,7 @@
  * @Author: ZhangYu
  * @Date: 2023-04-01 00:31:26
  * @LastEditors: ZhangYu
- * @LastEditTime: 2023-04-01 21:44:59
+ * @LastEditTime: 2023-04-01 22:06:15
  */
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 const ESLintWebpackPlugin = require('eslint-webpack-plugin')
@@ -111,7 +111,10 @@ module.exports = {
                 options: {
                   // presets: ['@babel/preset-env']
                   cacheDirectory: true, // 开启babel缓存
-                  cacheCompression: false // 关闭缓存文件压缩
+                  cacheCompression: false, // 关闭缓存文件压缩
+                  // 禁用了Babel自动对每个文件的runtime注入，而是引入
+                  // 并且使所有辅助代码从这里引入
+                  plugins: ["@babel/plugin-transform-runtime"]
                 }
               }
             ]
