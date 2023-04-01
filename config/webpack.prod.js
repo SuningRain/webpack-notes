@@ -3,7 +3,7 @@
  * @Author: ZhangYu
  * @Date: 2023-04-01 00:31:26
  * @LastEditors: ZhangYu
- * @LastEditTime: 2023-04-01 17:53:48
+ * @LastEditTime: 2023-04-01 18:06:49
  */
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 const ESLintWebpackPlugin = require('eslint-webpack-plugin')
@@ -94,12 +94,12 @@ module.exports = {
             test: /\.js$/,
             // exclude: /node_modules/, // 排除
             include: path.resolve(__dirname, '../src'),
-            loader: 'babel-loader'
-            // use: {
-            //   options: {
-            //     presets: ['@babel/preset-env']
-            //   }
-            // }
+            loader: 'babel-loader',
+            options: {
+              // presets: ['@babel/preset-env']
+              cacheDirectory: true, // 开启babel缓存
+              cacheCompression: false // 关闭缓存文件压缩
+            }
           }
         ]
       }
@@ -110,6 +110,11 @@ module.exports = {
     new ESLintWebpackPlugin({
       context: path.resolve(__dirname, '../src'),
       exclude: "node_modules",
+      cache: true, // 开启缓存
+      cacheLocation: path.resolve(
+        __dirname,
+        '../node_modules/.cache/eslintcache'
+      )
     }),
     new HtmlWebpackPlugin({
       // 模板：以public/index.html文件创建新的html文件
