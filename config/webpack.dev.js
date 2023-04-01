@@ -3,12 +3,15 @@
  * @Author: ZhangYu
  * @Date: 2023-04-01 00:31:26
  * @LastEditors: ZhangYu
- * @LastEditTime: 2023-04-01 17:47:15
+ * @LastEditTime: 2023-04-01 21:50:47
  */
 const ESLintWebpackPlugin = require('eslint-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const path = require('path')
+const os = require('os')
+
+const threads = os.cpus().length
 
 // 用来获取处理样式的loader
 function getStyleLoader (pre) {
@@ -93,12 +96,22 @@ module.exports = {
             test: /\.js$/,
             // exclude: /node_modules/, // 排除
             include: path.resolve(__dirname, '../src'),
-            loader: 'babel-loader'
-            // use: {
-            //   options: {
-            //     presets: ['@babel/preset-env']
-            //   }
-            // }
+            use:[
+              {
+                loader: 'thread-loader',
+                options: {
+                  works: threads // 进程数量
+                }
+              },
+              {
+                loader: 'babel-loader',
+                options: {
+                  // presets: ['@babel/preset-env']
+                  cacheDirectory: true, // 开启babel缓存
+                  cacheCompression: false // 关闭缓存文件压缩
+                }
+              }
+            ]
           }
         ]
       }
@@ -108,7 +121,13 @@ module.exports = {
   plugins: [
     new ESLintWebpackPlugin({
       context: path.resolve(__dirname, '../src'),
-      exclude: "node_modules"
+      exclude: "node_modules",
+      cache: true, // 开启缓存
+      cacheLocation: path.resolve(
+        __dirname,
+        '../node_modules/.cache/eslintcache'
+      ),
+      threads: threads
     }),
     new HtmlWebpackPlugin({
       // 模板：以public/index.html文件创建新的html文件
