@@ -3,7 +3,7 @@
  * @Author: ZhangYu
  * @Date: 2023-04-01 00:31:26
  * @LastEditors: ZhangYu
- * @LastEditTime: 2023-04-01 15:38:20
+ * @LastEditTime: 2023-04-01 15:45:01
  */
 const ESLintWebpackPlugin = require('eslint-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -33,19 +33,52 @@ module.exports = {
         test: /\.css$/,
         use: [ // 执行顺序从后往前
           MiniCssExtractPlugin.loader, // 将js中css通过创建style标签添加到html文件中生效
-          'css-loader' // 将css资源编译成commonjs的模块到js中
+          'css-loader', // 将css资源编译成commonjs的模块到js中
+          {
+            loader: 'postcss-loader',
+            options: {
+              postcssOptions: {
+                plugins: [
+                  'postcss-preset-env' // 能解决大多数样式兼容性问题
+                ]
+              }
+            }
+          }
         ]
       },
       {
         test: /\.less$/,
         use: [
-          MiniCssExtractPlugin.loader, 'css-loader', 'less-loader'
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          {
+            loader: 'postcss-loader',
+            options: {
+              postcssOptions: {
+                plugins: [
+                  'postcss-preset-env' // 能解决大多数样式兼容性问题
+                ]
+              }
+            }
+          },
+          'less-loader'
         ]
       },
       {
         test: /\.s[ac]ss$/,
         use: [
-          MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'
+          MiniCssExtractPlugin.loader, 'css-loader',
+          {
+            loader: 'postcss-loader',
+            options: {
+              postcssOptions: {
+                plugins: [
+                  'postcss-preset-env' // 能解决大多数样式兼容性问题
+                ]
+              }
+            }
+          },
+          'sass-loader'
         ]
       },
       { // webpack默认配置了url loader，图片默认会处理，这里处理特性需求
