@@ -3,13 +3,14 @@
  * @Author: ZhangYu
  * @Date: 2023-04-01 00:31:26
  * @LastEditors: ZhangYu
- * @LastEditTime: 2023-04-01 14:26:41
+ * @LastEditTime: 2023-04-01 14:42:19
  */
 const ESLintWebpackPlugin = require('eslint-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const path = require('path')
 
 module.exports = {
+  mode: 'development',
   // 入口
   entry: {
     path: './src/main.js' // 相对路径
@@ -20,8 +21,8 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     // 打包输出，入口文件路径
     filename: 'static/js/main.js',
-    // 打包自动清除上一个dist
-    clean: true
+    // 打包自动清除上一个dist 开发环境不需要
+    // clean: true
   },
   // 加载器
   module: {
@@ -95,6 +96,10 @@ module.exports = {
       template: path.resolve(__dirname, 'public/index.html')
     })
   ],
-  mode: 'development'
-
+  // 不会在dist目录下输出，它是在内存中编译打包的。
+  devServer: {
+    host: 'localhost',
+    port: '8080',
+    open: true // 是否自动打开浏览器
+  }
 }

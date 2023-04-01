@@ -1,6 +1,6 @@
 .content {
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   background-image: url('../images/image1.jpg');
   object-fit: contain;
 }
