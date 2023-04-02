@@ -3,7 +3,7 @@
  * @Author: ZhangYu
  * @Date: 2023-03-31 22:09:44
  * @LastEditors: ZhangYu
- * @LastEditTime: 2023-04-01 23:54:23
+ * @LastEditTime: 2023-04-02 11:40:30
  */
 import './css/iconfont.css'
 import './css/index.css'
@@ -18,7 +18,7 @@ console.log(sum(1, 2 ,3))
 console.log(document.getElementById('btn'))
 document.getElementById('btn').onclick = function () {
   // webpack 魔法命名 打包后的文件名
-  import(/* webpackChunkName: "math" */ './js/math').then(({ mul }) => {
+  import(/* webpackChunkName: "math", webpackPrefetch: true */ './js/math').then(({ mul }) => {
     console.log(mul(2, 3))
   })
 }
@@ -30,3 +30,11 @@ if (module.hot) { // 开发环境
   module.hot.accept('./js/sum')
   module.hot.accept('./js/math')
 }
+
+// new Promise ((reslove) => {
+//   setTimeout(() => {
+//     reslove()
+//   })
+// })
+
+// [1, 2].includes(1)

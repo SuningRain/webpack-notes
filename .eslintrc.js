@@ -3,7 +3,7 @@
  * @Author: ZhangYu
  * @Date: 2023-04-01 12:13:47
  * @LastEditors: ZhangYu
- * @LastEditTime: 2023-04-01 23:14:19
+ * @LastEditTime: 2023-04-02 10:57:10
  */
 module.exports = {
   // 基础 Eslint 规则
@@ -13,7 +13,7 @@ module.exports = {
     browser: true // 启用浏览器中全局变量
   },
   parserOptions: {
-    ecmaVersion: 6, // es6
+    ecmaVersion: 'latest', // es6
     sourceType: 'module' // es module
   },
   rules: {

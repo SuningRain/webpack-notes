@@ -3,7 +3,7 @@
  * @Author: ZhangYu
  * @Date: 2023-04-01 00:31:26
  * @LastEditors: ZhangYu
- * @LastEditTime: 2023-04-02 00:12:02
+ * @LastEditTime: 2023-04-02 11:46:25
  */
 const ESLintWebpackPlugin = require('eslint-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -36,14 +36,14 @@ module.exports = {
   mode: 'development',
   // 入口
   entry: {
-    path: './src/main.js' // 相对路径，这里路径不用修改到上一级是因为，配置文件实际运行是在最外层
+    main: './src/main.js' // 相对路径，这里路径不用修改到上一级是因为，配置文件实际运行是在最外层
   },
   // 输出 开发环境不需要
   output: {
     // 绝对路径，__dirname表示nodejs变量，代表当前文件夹的文件目录
     path: path.resolve(__dirname, '../dist'),
     // 打包输出，入口文件路径
-    filename: 'static/js/main.js',
+    filename: 'static/js/[name].js',
     // 打包后其他文件命名
     chunkFilename: 'static/js/[name].chunk.js',
     // 图片，字体等通过type:asset 处理资源命名方式
@@ -93,7 +93,7 @@ module.exports = {
             test: /\.(mp3|mp4|avi)$/,
             type: 'asset/resource',
             generator: {
-              filename: 'static/media/[hash:10][ext][query]'
+              // filename: 'static/media/[hash:10][ext][query]'
             }
           },
           {

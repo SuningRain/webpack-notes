@@ -3,7 +3,7 @@
  * @Author: ZhangYu
  * @Date: 2023-04-01 00:31:26
  * @LastEditors: ZhangYu
- * @LastEditTime: 2023-04-02 00:57:20
+ * @LastEditTime: 2023-04-02 11:21:13
  */
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 const ESLintWebpackPlugin = require('eslint-webpack-plugin')
@@ -41,13 +41,14 @@ module.exports = {
   mode: 'production',
   // 入口
   entry: {
-    path: './src/main.js' // 相对路径
+    main: './src/main.js' // 相对路径
   },
   // 输出 开发环境不需要
   output: {
     // 绝对路径，__dirname表示nodejs变量，代表当前文件夹的文件目录
     path: path.resolve(__dirname, '../dist'),
     // 打包输出，文件名
+    // 这里不知道为啥只有写成[name]，runtimeChunk才能取到值
     filename: 'static/js/[name].[contenthash:10].js',
     // 打包后其他文件命名
     chunkFilename: 'static/js/[name].chunk.[contenthash:10].js',
@@ -198,7 +199,7 @@ module.exports = {
     },
     // 生成一个hash值依赖文件，避免一个文件改变，其他引用这个文件的也重新加载
     runtimeChunk: {
-      name: (entrypoint) => `runtime~$(entrypoint.name).js`
+      name: (entrypoint) => `runtime~${entrypoint.name}.js`
     }
   },
   devtool: 'source-map' // 有行和列的映射
