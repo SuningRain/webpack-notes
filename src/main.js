@@ -3,7 +3,7 @@
  * @Author: ZhangYu
  * @Date: 2023-03-31 22:09:44
  * @LastEditors: ZhangYu
- * @LastEditTime: 2023-04-02 11:40:30
+ * @LastEditTime: 2023-04-02 12:37:48
  */
 import './css/iconfont.css'
 import './css/index.css'
@@ -15,7 +15,6 @@ import sum from './js/sum'
 
 console.log(count(1, 2))
 console.log(sum(1, 2 ,3))
-console.log(document.getElementById('btn'))
 document.getElementById('btn').onclick = function () {
   // webpack 魔法命名 打包后的文件名
   import(/* webpackChunkName: "math", webpackPrefetch: true */ './js/math').then(({ mul }) => {
@@ -38,3 +37,18 @@ if (module.hot) { // 开发环境
 // })
 
 // [1, 2].includes(1)
+
+// 注册离线访问serviceWorker
+if ('serviceWorker' in navigator) {
+  console.log('serviceWorker')
+  window.addEventListener('load', () => {
+    navigator.serviceWorker
+      .register('./service-worker.js')
+      .then((resistration) => {
+        console.log('SW registered: ', resistration)
+      })
+      .catch((registartionError) => {
+        console.log("SW registration failed: ", registartionError)
+      })
+  })
+}

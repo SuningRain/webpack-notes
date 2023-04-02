@@ -3,7 +3,7 @@
  * @Author: ZhangYu
  * @Date: 2023-04-01 00:31:26
  * @LastEditors: ZhangYu
- * @LastEditTime: 2023-04-02 11:21:13
+ * @LastEditTime: 2023-04-02 12:04:33
  */
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 const ESLintWebpackPlugin = require('eslint-webpack-plugin')
@@ -12,6 +12,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const TerserWebpackPlugin = require('terser-webpack-plugin')
 const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
 const PreloadWebpackPlugin = require('@vue/preload-webpack-plugin')
+const WorkBoxPlugin = require('workbox-webpack-plugin')
 
 const path = require('path')
 const os = require('os')
@@ -189,8 +190,14 @@ module.exports = {
         },
       }),
       new PreloadWebpackPlugin({
-        rel: 'preload',
+        rel: 'preload', // 同一个文件，空闲时加载后面的js prefetch 空闲时可以加载其他文件的js引入
         as: 'script'
+      }),
+      new WorkBoxPlugin.GenerateSW({
+        // 这些选择帮助快速启用 ServiceWorkers
+        // 不允许遗留任何“旧的” ServiceWorkers
+        clientsClaim: true,
+        skipWaiting: true
       })
     ],
     // 代码分割配置
