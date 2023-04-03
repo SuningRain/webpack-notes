@@ -3,14 +3,15 @@
  * @Author: ZhangYu
  * @Date: 2023-04-01 12:13:47
  * @LastEditors: ZhangYu
- * @LastEditTime: 2023-04-02 10:57:10
+ * @LastEditTime: 2023-04-02 17:41:51
  */
 module.exports = {
   // 基础 Eslint 规则
   extends: ["eslint:recommended"],
   env: { // 环境变量
     node: true, // 启用node中全局变量
-    browser: true // 启用浏览器中全局变量
+    browser: true, // 启用浏览器中全局变量
+    es6: true // 配置支持es6+语法和api
   },
   parserOptions: {
     ecmaVersion: 'latest', // es6

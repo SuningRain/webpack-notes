@@ -6,7 +6,8 @@
   "scripts": {
     "start": "npm run dev",
     "dev": "webpack server --config ./config/webpack.dev.js",
-    "build": "webpack --config ./config/webpack.prod.js"
+    "build": "webpack --config ./config/webpack.prod.js",
+    "debug": "node --inspect-brk ./node_modules/webpack-cli/bin/cli.js --config ./config/webpack.prod.js"
   },
   "keywords": [],
   "author": "",
