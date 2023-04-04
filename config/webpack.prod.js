@@ -3,7 +3,7 @@
  * @Author: ZhangYu
  * @Date: 2023-04-01 00:31:26
  * @LastEditors: ZhangYu
- * @LastEditTime: 2023-04-04 20:50:12
+ * @LastEditTime: 2023-04-04 23:17:18
  */
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 const ESLintWebpackPlugin = require('eslint-webpack-plugin')
@@ -17,6 +17,7 @@ const WorkBoxPlugin = require('workbox-webpack-plugin')
 const BannerWebpackPlugin = require('../custom/plugins/banner-webpack-plugin')
 const CleanWebpackPlugin = require('../custom/plugins/clean-webpack-plugin')
 const AnalyzeWebpackPlugin = require('../custom/plugins/analyze.webpack-plugin')
+const InlineWebPackPlugin = require('../custom/plugins/inline-webpack-plugin')
 
 const path = require('path')
 const os = require('os')
@@ -169,10 +170,22 @@ module.exports = {
       author: '李四'
     }),
     new CleanWebpackPlugin(),
-    new AnalyzeWebpackPlugin()
+    new AnalyzeWebpackPlugin(),
+    new InlineWebPackPlugin({
+      rules: [/runtime(.*)\.js$/g]
+    })
     // new TestPlugin()
   ],
+  // 优化相关的插件可以放到这里面
   optimization: {
+    // 生成一个hash值依赖文件，避免一个文件改变，其他引用这个文件的也重新加载
+    runtimeChunk: {
+      name: (entrypoint) => `runtime~${entrypoint.name}`,
+    },
+    // 代码分割配置
+    splitChunks: {
+      chunks: 'all'
+    },
     // 压缩的操作
     minimizer: [
       // css 压缩
@@ -210,14 +223,6 @@ module.exports = {
         },
       })
     ],
-    // 代码分割配置
-    splitChunks: {
-      chunks: 'all'
-    },
-    // 生成一个hash值依赖文件，避免一个文件改变，其他引用这个文件的也重新加载
-    runtimeChunk: {
-      name: (entrypoint) => `runtime~${entrypoint.name}.js`
-    }
   },
   devtool: 'source-map' // 有行和列的映射
 }

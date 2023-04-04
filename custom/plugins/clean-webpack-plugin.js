@@ -3,7 +3,7 @@
  * @Author: ZhangYu
  * @Date: 2023-04-03 13:12:43
  * @LastEditors: ZhangYu
- * @LastEditTime: 2023-04-04 19:19:09
+ * @LastEditTime: 2023-04-04 23:04:23
  */
 class CleanWebpackPlugin {
   apply (compiler) {
@@ -18,7 +18,7 @@ class CleanWebpackPlugin {
   removeFiles (fs, filePath) {
     // 删除目录下资源和目录
     const files = fs.readdirSync(filePath)
-    console.log('文件', files)
+    // console.log('文件', files)
     // 遍历该目录下的所有内容
     files.forEach(item => {
       const path = `${filePath}/${item}`
@@ -26,7 +26,7 @@ class CleanWebpackPlugin {
       if (file.isDirectory()) {
         this.removeFiles(fs, path)
       } else {
-        console.log('路径', path)
+        // console.log('路径', path)
         fs.unlinkSync(path)
       }
     })
