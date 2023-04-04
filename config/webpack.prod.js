@@ -3,7 +3,7 @@
  * @Author: ZhangYu
  * @Date: 2023-04-01 00:31:26
  * @LastEditors: ZhangYu
- * @LastEditTime: 2023-04-02 16:48:35
+ * @LastEditTime: 2023-04-04 19:17:13
  */
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 const ESLintWebpackPlugin = require('eslint-webpack-plugin')
@@ -13,8 +13,9 @@ const TerserWebpackPlugin = require('terser-webpack-plugin')
 const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
 const PreloadWebpackPlugin = require('@vue/preload-webpack-plugin')
 const WorkBoxPlugin = require('workbox-webpack-plugin')
-const TestPlugin = require('../custom/plugins/demo1.js')
+// const TestPlugin = require('../custom/plugins/demo1.js')
 const BannerWebpackPlugin = require('../custom/plugins/banner-webpack-plugin')
+const CleanWebpackPlugin = require('../custom/plugins/clean-webpack-plugin')
 
 const path = require('path')
 const os = require('os')
@@ -58,7 +59,7 @@ module.exports = {
     // 图片，字体等通过type:asset 处理资源命名方式
     assetModuleFilename: 'static/media/[contenthash:10][ext][query]',
     // 打包自动清除上一个dist
-    clean: true
+    // clean: true
   },
   // 加载器
   module: {
@@ -165,7 +166,8 @@ module.exports = {
     }),
     new BannerWebpackPlugin ({
       author: '李四'
-    })
+    }),
+    new CleanWebpackPlugin()
     // new TestPlugin()
   ],
   optimization: {
